@@ -1,0 +1,44 @@
+#Unable to program Arduino using ArduinoIDE on MAC
+
+note: this might help on windows as well.
+I got frustrated with programming failures where it would get stuck with "programmer not responding" error
+
+I would recommend trying this approach atleast to ensure that your device is in proper working condition.
+
+1. First connect your arduino to the linux machine via USB
+2. Download the arduino CLI using below command
+wget -qO arduino-cli.tar.gz https://downloads.arduino.cc/arduino-cli/arduino-cli_latest_Linux_64bit.tar.gz
+3. Unzip the file
+sudo tar xf arduino-cli.tar.gz -C /usr/local/bin arduino-cli
+4. Check if the installation was successful (You might have to include the /usr/local/bin to the path variable using $export PATH="/usr/local/bin:$PATH")
+arduino-cli version 
+5. Now check if you are able to detect the board 
+arduino-cli board list 
+You should see something like:
+Port         Protocol Type              Board Name  FQBN            Core       
+/dev/ttyACM0 serial   Serial Port (USB) Arduino Uno arduino:avr:uno arduino:avr
+6. Install the arduino core libraries
+arduino-cli core install arduino:avr 
+7. Now make a program to blink the internal LED. 
+  * Create a directory names led_blink then create a file called led_blink.ino inside the folder with below content
+  Note: you can change the time to some arbitrary value if arduino already has LED blink program is loaded(few vendors ship the device with this default program)
+
+void setup() {
+    pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop() {
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(1000);
+}
+8. Compile the program using below command
+arduino-cli compile --fqbn arduino:avr:uno led_blink
+9. upload the code to arduino using below command ensure that the port is properly specificed. (you will get port from step 5 above)
+arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno 16_16_LED
+
+Voila - you are able to program the board now via commandline. 
+
+
+
