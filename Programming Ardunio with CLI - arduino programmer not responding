@@ -36,7 +36,7 @@ void loop() {
 8. Compile the program using below command
 arduino-cli compile --fqbn arduino:avr:uno led_blink
 9. upload the code to arduino using below command ensure that the port is properly specificed. (you will get port from step 5 above)
-arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno 16_16_LED
+arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno led_blink
 
 Voila - you are able to program the board now via commandline. 
 
