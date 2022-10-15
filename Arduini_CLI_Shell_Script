@@ -1,0 +1,28 @@
+#!/usr/bin/bash
+
+if [[ $# -eq 0 ]] ; then 
+	echo 'No Arguments Supplied please use --help or -h for help';
+	exit 1;
+fi
+
+if [ $1 == '--help' ] || [ $1 == '-h' ] ; then
+	echo 'Usage compile/flash followed by .ino folder path' 
+	echo '-c or --compile  compile only'
+	echo '-f or --flash    compile and flash';
+	echo '-h or --help     show help';
+	exit 1;
+elif [ $1 == '--compile' ] || [ $1 == '-c' ] ; then
+        echo 'Compiling '$2
+	arduino-cli compile --fqbn arduino:avr:uno $2
+        exit 1;
+elif [ $1 == '--flash' ] || [ $1 == '-f' ] ; then
+        echo 'Compiling and flashing '$2
+        arduino-cli compile --fqbn arduino:avr:uno $2
+	arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno $2
+        exit 1;
+else
+	echo 'Unsuppored command use --help for usage instructions'
+fi 
+
+
+
